@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2z905f-xq$*)e#rr)6gxk)i1l3o&3-3u6wh7==jvzu-a+g5e9$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,19 @@ INSTALLED_APPS = [
     'pagamentosapp.apps.PagamentosappConfig',
 ]
 
+"""
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework_xml.parsers.XMLParser',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework_xml.renderers.XMLRenderer',
+    ),
+}
+"""
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,9 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',
-]
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'pagamentosapi.urls'
 
@@ -81,11 +92,23 @@ WSGI_APPLICATION = 'pagamentosapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'apipayments',
+        'USER': 'root',
+        'PASSWORD': 'AngolaCables2021',
+        'HOST': '10.100.120.28',   
+        'PORT': '3306',
+    }    
 }
 
 
@@ -131,3 +154,13 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+
+
+EMAIL_HOST_USER = 'vasconsellosolliveira@gmail.com' #os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = '21430870Olly100295' #os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'do-not-reply@africaplay.ao'
